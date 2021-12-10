@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'io.quarkus' apply false
+}
+
+allprojects {
+    group = 'my.project'
+    version = '0.0.0'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+subprojects {
+    apply plugin: 'java'
+
+	configurations.all {
+	    resolutionStrategy { 
+	        force 'io.smallrye.config:smallrye-config:2.5.1'
+	    }
+	}
+
+    dependencies {
+        implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+        
+        implementation 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
+    }
+}
